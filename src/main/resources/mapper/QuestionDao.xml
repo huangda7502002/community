@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="life.majiang.community.dao.QuestionDao">
+
+    <resultMap type="life.majiang.community.entity.Question" id="QuestionMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+        <result property="gmtCreate" column="GMT_CREATE" jdbcType="INTEGER"/>
+        <result property="gmtModified" column="GMT_MODIFIED" jdbcType="INTEGER"/>
+        <result property="creator" column="CREATOR" jdbcType="INTEGER"/>
+        <result property="commentCount" column="COMMENT_COUNT" jdbcType="INTEGER"/>
+        <result property="viewCount" column="VIEW_COUNT" jdbcType="INTEGER"/>
+        <result property="likeCount" column="LIKE_COUNT" jdbcType="INTEGER"/>
+        <result property="tag" column="TAG" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="QuestionMap">
+        select ID,
+               TITLE,
+               DESCRIPTION,
+               GMT_CREATE,
+               GMT_MODIFIED,
+               CREATOR,
+               COMMENT_COUNT,
+               VIEW_COUNT,
+               LIKE_COUNT,
+               TAG
+        from PUBLIC.QUESTION
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="QuestionMap">
+        select ID,
+               TITLE,
+               DESCRIPTION,
+               GMT_CREATE,
+               GMT_MODIFIED,
+               CREATOR,
+               COMMENT_COUNT,
+               VIEW_COUNT,
+               LIKE_COUNT,
+               TAG
+        from PUBLIC.QUESTION
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="QuestionMap">
+        select
+        ID, TITLE, DESCRIPTION, GMT_CREATE, GMT_MODIFIED, CREATOR, COMMENT_COUNT, VIEW_COUNT, LIKE_COUNT, TAG
+        from PUBLIC.QUESTION
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and TITLE = #{title}
+            </if>
+            <if test="description != null and description != ''">
+                and DESCRIPTION = #{description}
+            </if>
+            <if test="gmtCreate != null">
+                and GMT_CREATE = #{gmtCreate}
+            </if>
+            <if test="gmtModified != null">
+                and GMT_MODIFIED = #{gmtModified}
+            </if>
+            <if test="creator != null">
+                and CREATOR = #{creator}
+            </if>
+            <if test="commentCount != null">
+                and COMMENT_COUNT = #{commentCount}
+            </if>
+            <if test="viewCount != null">
+                and VIEW_COUNT = #{viewCount}
+            </if>
+            <if test="likeCount != null">
+                and LIKE_COUNT = #{likeCount}
+            </if>
+            <if test="tag != null and tag != ''">
+                and TAG = #{tag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into PUBLIC.QUESTION(TITLE, DESCRIPTION, GMT_CREATE, GMT_MODIFIED, CREATOR, COMMENT_COUNT, VIEW_COUNT,
+                                    LIKE_COUNT, TAG)
+        values (#{title}, #{description}, #{gmtCreate}, #{gmtModified}, #{creator}, #{commentCount}, #{viewCount},
+                #{likeCount}, #{tag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update PUBLIC.QUESTION
+        <set>
+            <if test="title != null and title != ''">
+                TITLE = #{title},
+            </if>
+            <if test="description != null and description != ''">
+                DESCRIPTION = #{description},
+            </if>
+            <if test="gmtCreate != null">
+                GMT_CREATE = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                GMT_MODIFIED = #{gmtModified},
+            </if>
+            <if test="creator != null">
+                CREATOR = #{creator},
+            </if>
+            <if test="commentCount != null">
+                COMMENT_COUNT = #{commentCount},
+            </if>
+            <if test="viewCount != null">
+                VIEW_COUNT = #{viewCount},
+            </if>
+            <if test="likeCount != null">
+                LIKE_COUNT = #{likeCount},
+            </if>
+            <if test="tag != null and tag != ''">
+                TAG = #{tag},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from PUBLIC.QUESTION
+        where ID = #{id}
+    </delete>
+
+</mapper>
