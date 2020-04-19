@@ -127,4 +127,15 @@
         where TOKEN = #{token}
     </select>
 
+    <select id="findByAccountId" resultMap="UserMap">
+        select ID,
+               ACCOUNT_ID,
+               NAME,
+               TOKEN,
+               GMT_CREATE,
+               GMT_MODIFIED
+        from PUBLIC.USER
+        where ACCOUNT_ID = #{accountId}
+    </select>
+
 </mapper>

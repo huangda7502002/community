@@ -67,4 +67,5 @@ public interface UserDao {
 
     User findByToken(String token);
 
+    User findByAccountId(String accountId);
 }

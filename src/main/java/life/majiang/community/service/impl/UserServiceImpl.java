@@ -50,7 +50,15 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User insert(User user) {
-        this.userDao.insert(user);
+        User dbUser = this.userDao.findByAccountId(user.getAccountId());
+        if (dbUser == null) {
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(System.currentTimeMillis());
+            this.userDao.insert(user);
+        } else {
+            user.setGmtModified(System.currentTimeMillis());
+            userDao.update(user);
+        }
         return user;
     }
 

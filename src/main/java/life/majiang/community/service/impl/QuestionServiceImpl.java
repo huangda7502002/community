@@ -96,4 +96,29 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return questionDTOList;
     }
+
+    @Override
+    public QuestionDTO getById(Integer id) {
+        Question question = questionDao.queryById(id);
+        Integer creator = question.getCreator();
+        User user = userDao.queryById(creator);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    @Override
+    public List<QuestionDTO> findByUserId(Integer userId) {
+        List<Question> byUserId = questionDao.findByUserId(userId);
+        User user = userDao.queryById(userId);
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        for (Question question : byUserId) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOList.add(questionDTO);
+        }
+        return questionDTOList;
+    }
 }

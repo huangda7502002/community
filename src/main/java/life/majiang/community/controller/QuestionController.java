@@ -1,10 +1,12 @@
 package life.majiang.community.controller;
 
+import life.majiang.community.dto.QuestionDTO;
 import life.majiang.community.entity.Question;
 import life.majiang.community.service.QuestionService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 
@@ -14,8 +16,7 @@ import javax.annotation.Resource;
  * @author makejava
  * @since 2020-04-14 21:18:19
  */
-@RestController
-@RequestMapping("question")
+@Controller
 public class QuestionController {
     /**
      * 服务对象
@@ -34,4 +35,10 @@ public class QuestionController {
         return this.questionService.queryById(id);
     }
 
+    @GetMapping("/question/{id}")
+    public String question(@PathVariable Integer id, Model model) {
+        QuestionDTO questionDTO = questionService.getById(id);
+        model.addAttribute("question", questionDTO);
+        return "question";
+    }
 }

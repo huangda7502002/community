@@ -136,4 +136,20 @@
         where ID = #{id}
     </delete>
 
+    <select id="findByUserId" resultMap="QuestionMap">
+        select ID,
+               TITLE,
+               DESCRIPTION,
+               GMT_CREATE,
+               GMT_MODIFIED,
+               CREATOR,
+               COMMENT_COUNT,
+               VIEW_COUNT,
+               LIKE_COUNT,
+               TAG
+        from PUBLIC.QUESTION
+        where CREATOR = #{id}
+    </select>
+
+
 </mapper>

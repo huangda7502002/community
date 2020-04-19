@@ -1,5 +1,6 @@
 package life.majiang.community.service;
 
+import life.majiang.community.dto.QuestionDTO;
 import life.majiang.community.entity.Question;
 
 import java.util.List;
@@ -52,5 +53,9 @@ public interface QuestionService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    QuestionDTO getById(Integer id);
+
+    List<QuestionDTO> findByUserId(Integer userId);
 
 }

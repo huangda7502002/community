@@ -65,4 +65,6 @@ public interface QuestionDao {
      */
     int deleteById(Integer id);
 
+    List<Question> findByUserId(Integer id);
+
 }
